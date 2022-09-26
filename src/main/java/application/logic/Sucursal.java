@@ -20,6 +20,10 @@ public class Sucursal {
         this.y = y;
     }
 
+   public Sucursal (){
+        this ("","", "", 0,0,0);
+   }
+
     public String getReferencia() {
         return referencia;
     }

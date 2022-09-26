@@ -22,7 +22,7 @@ public class Model extends java.util.Observable{
     @Override
     public void addObserver(Observer o) {
         super.addObserver(o);
-        commit();
+        this.commit();
     }
 
     public void commit(){

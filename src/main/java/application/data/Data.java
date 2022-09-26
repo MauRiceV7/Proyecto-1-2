@@ -18,6 +18,8 @@ public class Data {
     public Data() {
         empleados = new ArrayList<>();
         sucursales = new ArrayList<>();
+        sucursales.add(new Sucursal("002","2","2",2,0,0));
+        empleados.add(new Empleado("1","1","1",new Sucursal(),2));
     }
 
     public List<Empleado> getEmpleados() {

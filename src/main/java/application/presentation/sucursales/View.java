@@ -1,6 +1,8 @@
 package application.presentation.sucursales;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
@@ -20,16 +22,19 @@ public class View implements Observer {
     Controller controller;
     Model model;
 
+
     public View() {
-        //TODO todos los listeners restantes y el icono de mapaFld
+        //TODO todos los listeners restantes
         //TODO for de pines de sucursales
         agregarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                controller.preAgregar();
             }
         });
     }
+
+
 
     public JPanel getPanel() {
         return panel;

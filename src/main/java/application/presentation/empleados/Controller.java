@@ -39,13 +39,14 @@ public class Controller {
         model.setEmpleados(rows);
         model.commit();
     }
+    public void preAgregar() { Application.empleadoController.preAgregar();}
+
     public void editar(int row){
         String cedula = model.getEmpleados().get(row).getCedula();
         Empleado e=null;
         try {
             e = Service.instance().empleadoGet(cedula);
-            //TODO agregar el empleado controller con metodo editar
-            //Application.empleadoController.editar(e);
+            Application.empleadoController.editar(e);
         } catch (Exception ex) {}
     }
 

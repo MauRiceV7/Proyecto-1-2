@@ -1,8 +1,10 @@
 package application.presentation.empleados;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -13,18 +15,42 @@ public class View implements Observer{
     private JButton buscarFld;
     private JButton agregarFld;
     private JButton borrarFld;
-    private JButton imprimierFld;
+    private JButton imprimirFld;
     private JTable empleadosFld;
     Controller controller;
     Model model;
 
 
     public View() {
-        //TODO todos los listeners restantes y el icono de imprimirFld
         buscarFld.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.buscar(nombreFld.getText());
+            }
+        });
+        agregarFld.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.preAgregar();
+            }
+        });
+        borrarFld.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = empleadosFld.getSelectedRow();
+                controller.borrar(row);
+            }
+        });
+        imprimirFld.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    controller.imprimir();
+                    if (Desktop.isDesktopSupported()) {
+                        File myFile = new File("empleados.pdf");
+                        Desktop.getDesktop().open(myFile);
+                    }
+                } catch (Exception ex) { }
             }
         });
     }

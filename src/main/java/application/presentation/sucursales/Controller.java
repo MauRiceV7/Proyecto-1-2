@@ -1,5 +1,6 @@
 package application.presentation.sucursales;
 
+import application.Application;
 import application.logic.Sucursal;
 import application.logic.Service;
 
@@ -22,4 +23,6 @@ public class Controller {
         model.setSucursales(rows);
         model.commit();
     }
+
+    public void preAgregar() { Application.sucursalController.preAgregar();}
 }
