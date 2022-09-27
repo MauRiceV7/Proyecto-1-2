@@ -68,19 +68,19 @@ public class Service {
     }
 
     public Sucursal sucursalGet(String codigo) throws Exception{
-        Sucursal result = data.getSucursales().stream().filter(e->e.getCodigo().equals(codigo)).findFirst().orElse(null);
+        Sucursal result = data.getSucursales().stream().filter(s->s.getCodigo().equals(codigo)).findFirst().orElse(null);
         if (result!=null) return result;
         else throw new Exception("Sucursal no existe");
     }
 
     public void sucursalAdd(Sucursal sucursal) throws Exception{
-        Sucursal result = data.getSucursales().stream().filter(e->e.getCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
+        Sucursal result = data.getSucursales().stream().filter(s->s.getCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
         if (result==null) data.getSucursales().add(sucursal);
         else throw new Exception("Sucursal ya existe");
     }
 
     public void sucursalDelete(Sucursal sucursal) throws Exception{
-        Sucursal result = data.getSucursales().stream().filter(e->e.getCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
+        Sucursal result = data.getSucursales().stream().filter(s->s.getCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
         if (result!=null) data.getSucursales().remove(sucursal);
         else throw new Exception("Sucursal no existe");
     }

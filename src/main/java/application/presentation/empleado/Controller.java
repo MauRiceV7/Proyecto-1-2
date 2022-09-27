@@ -17,6 +17,8 @@ public class Controller {
 
         this.view = view;
         this.model = model;
+        view.setController(this);
+        view.setModel(model);
     }
     public void show() {
         dialog = new JDialog(Application.window, "Empleado", true);

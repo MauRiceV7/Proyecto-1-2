@@ -17,6 +17,8 @@ public class Controller {
         model.setCurrent(new Sucursal());
         this.view = view;
         this.model = model;
+        view.setController(this);
+        view.setModel(model);
     }
     public void show() {
         dialog = new JDialog(Application.window, "Sucursal", true);
@@ -45,7 +47,7 @@ public class Controller {
                 model.setCurrent(s);
                 break;
         }
-        Application.empleadosController.buscar("");
+        Application.sucursalesController.buscar("");
         model.commit();
     }
 

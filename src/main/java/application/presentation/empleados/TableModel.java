@@ -32,7 +32,7 @@ public class TableModel extends AbstractTableModel implements javax.swing.table.
     public int getRowCount() {
         return rows.size();
     }
-
+    //TODO terminar implementacion, datos para prueba
     public Object getValueAt(int row, int col) {
         Empleado empleado = rows.get(row);
         switch (cols[col]){
@@ -40,9 +40,9 @@ public class TableModel extends AbstractTableModel implements javax.swing.table.
             case NOMBRE: return empleado.getNombre();
             case TELEFONO: return empleado.getNumeroTel();
             case SALARIO: return empleado.getSalario();
-            case SUCURSAL: return empleado.getSucursal().getReferencia();
-            case ZONAJE: return empleado.getSucursal().getZonaje();
-            case SALARIOTOTAL: return (empleado.getSalarioTotal());
+            case SUCURSAL: return "San Rafael";//empleado.getSucursal().getReferencia();
+            case ZONAJE: return 1;//empleado.getSucursal().getZonaje();
+            case SALARIOTOTAL: return 11;//(empleado.getSalarioTotal());
             default: return "";
         }
     }

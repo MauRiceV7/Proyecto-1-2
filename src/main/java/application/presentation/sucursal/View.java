@@ -35,9 +35,8 @@ public class View implements Observer {
                     Sucursal n = take();
                     try {
                         controller.guardar(n);
-                        //controller.guardar(new Sucursal()); -> null
                     } catch (Exception ex) {
-                        System.out.println(ex.getCause()); // -> null
+                        System.out.println(ex.getCause());
                         JOptionPane.showMessageDialog(panel, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
                 }
@@ -47,7 +46,15 @@ public class View implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-
+        Sucursal current = model.getCurrent();
+        String zonaje = String.valueOf(current.getZonaje());
+        this.codigoFld.setEnabled(model.getModo() == Application.MODO_AGREGAR);
+        this.codigoFld.setText(current.getReferencia());
+        this.referenciaFld.setText(current.getReferencia());
+        this.direccionFld.setText(current.getReferencia());
+        this.zonajeFld.setText(current.getReferencia());
+        this.zonajeFld.setText(zonaje);
+        this.panel.validate();
     }
 
     public Sucursal take() {
@@ -57,10 +64,11 @@ public class View implements Observer {
         s.setReferencia(referenciaFld.getText());
         s.setDireccion(direccionFld.getText());
         s.setZonaje(zonaje);
-        s.setX(0);
-        s.setY(0);
+        s.setX(1);
+        s.setY(1);
         return s;
     }
+
 
     private boolean validate() {
         boolean valid = true;
@@ -109,5 +117,21 @@ public class View implements Observer {
 
     public void setPanel(JPanel panel) {
         this.panel = panel;
+    }
+
+    public Controller getController() {
+        return controller;
+    }
+
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
     }
 }

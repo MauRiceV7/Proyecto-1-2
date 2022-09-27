@@ -52,13 +52,35 @@ public class View implements Observer {
         return panel;
     }
 
+    public Controller getController() {
+        return controller;
+    }
+
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
+    }
+
     @Override
     public void update(Observable o, Object arg) {
-
+        Empleado current = model.getCurrent();
+        String salario = String.valueOf(current.getSalario());
+        this.cedulaFld.setEnabled(model.getModo() == Application.MODO_AGREGAR);
+        this.cedulaFld.setText(current.getCedula());
+        this.nombreFld.setText(current.getNombre());
+        this.numeroTelFld.setText(current.getNumeroTel());
+        this.sucursalFld.setText(current.getSucursal().getCodigo());
+        this.salarioFld.setText(salario);
+        this.panel.validate();
     }
-    //TODO Revisar funcionalidad add Empleado
-    //No agrega empleado,
-    //Puede ser problable a que falta implementar el add Sucursal
+    //TODO Implementacion final take
     public Empleado take() {
         Empleado e = new Empleado();
         int salario = Integer.parseInt(salarioFld.getText());

@@ -11,7 +11,6 @@ public class View implements Observer {
     Model model;
     private JLabel siseLbl;
     private JLabel totalSoftLbl;
-    private JLabel logoLbl;
     private JPanel panel;
 
     @Override

@@ -34,15 +34,15 @@ public class View implements Observer {
         });
     }
 
-
-
     public JPanel getPanel() {
         return panel;
     }
+
     public void setModel(Model model) {
         this.model = model;
         model.addObserver(this);
     }
+
     public void setController(Controller controller) {
         this.controller = controller;
     }
