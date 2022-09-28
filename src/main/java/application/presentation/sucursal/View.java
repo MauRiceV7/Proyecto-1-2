@@ -42,6 +42,12 @@ public class View implements Observer {
                 }
             }
         });
+        cancelarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.hide();
+            }
+        });
     }
 
     @Override

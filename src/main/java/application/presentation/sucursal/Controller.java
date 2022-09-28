@@ -50,6 +50,12 @@ public class Controller {
         Application.sucursalesController.buscar("");
         model.commit();
     }
+    public void editar(Sucursal s){
+        model.setModo(Application.MODO_EDITAR);
+        model.setCurrent(s);
+        model.commit();
+        this.show();
+    }
 
     public void hide() { dialog.dispose();}
 }

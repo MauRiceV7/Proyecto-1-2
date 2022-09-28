@@ -97,14 +97,28 @@ public class Controller {
 
         Color bkg = ColorConstants.RED;
         Color frg= ColorConstants.WHITE;
-        Table body = new Table(2);
+        Table body = new Table(7);
         body.setWidth(400);
         body.setHorizontalAlignment(HorizontalAlignment.CENTER);
         body.addCell(getCell(new Paragraph("Cedula").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
         body.addCell(getCell(new Paragraph("Nombre").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
+        body.addCell(getCell(new Paragraph("Telefono").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
+        body.addCell(getCell(new Paragraph("Salario").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
+        body.addCell(getCell(new Paragraph("Sucursal").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
+        body.addCell(getCell(new Paragraph("% Zonaje").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
+        body.addCell(getCell(new Paragraph("Sal. Total").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
         for(Empleado e: model.getEmpleados()){
+            String salario = String.valueOf(e.getSalario());
+            String zonaje = String.valueOf(e.getSucursal().getZonaje());
+            String salarioTotal = String.valueOf(e.getSalarioTotal());
             body.addCell(getCell(new Paragraph(e.getCedula()),TextAlignment.CENTER,true));
             body.addCell(getCell(new Paragraph(e.getNombre()),TextAlignment.CENTER,true));
+            body.addCell(getCell(new Paragraph(e.getNumeroTel()),TextAlignment.CENTER,true));
+            body.addCell(getCell(new Paragraph(salario),TextAlignment.CENTER,true));
+            body.addCell(getCell(new Paragraph(e.getSucursal().getReferencia()),TextAlignment.CENTER,true));
+            body.addCell(getCell(new Paragraph(zonaje),TextAlignment.CENTER,true));
+            body.addCell(getCell(new Paragraph(salarioTotal),TextAlignment.CENTER,true));
+
         }
         document.add(body);
         document.close();
