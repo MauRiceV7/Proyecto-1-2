@@ -55,10 +55,9 @@ public class View implements Observer {
         Sucursal current = model.getCurrent();
         String zonaje = String.valueOf(current.getZonaje());
         this.codigoFld.setEnabled(model.getModo() == Application.MODO_AGREGAR);
-        this.codigoFld.setText(current.getReferencia());
+        this.codigoFld.setText(current.getCodigo());
         this.referenciaFld.setText(current.getReferencia());
-        this.direccionFld.setText(current.getReferencia());
-        this.zonajeFld.setText(current.getReferencia());
+        this.direccionFld.setText(current.getDireccion());
         this.zonajeFld.setText(zonaje);
         this.panel.validate();
     }

@@ -1,7 +1,9 @@
 package application.presentation.acercaDe;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -12,6 +14,7 @@ public class View implements Observer {
     private JLabel siseLbl;
     private JLabel totalSoftLbl;
     private JPanel panel;
+    private JLabel logoLbl;
 
     @Override
     public void update(Observable o, Object arg) {
@@ -31,4 +34,8 @@ public class View implements Observer {
         this.model = model;
     }
     public JPanel getPanel() { return panel; }
+
+
+
+
 }
