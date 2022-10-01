@@ -10,6 +10,6 @@ public class Controller {
         this.model = model;
         view.setController(this);
         view.setModel(model);
+        view.logoLoad();
     }
-
 }
