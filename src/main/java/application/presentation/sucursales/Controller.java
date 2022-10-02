@@ -32,6 +32,7 @@ public class Controller {
         this.model = model;
         view.setController(this);
         view.setModel(model);
+        view.loadSucursales();
     }
 
     public void buscar(String filtro){

@@ -1,13 +1,15 @@
 package application.presentation.sucursales;
 
+import application.logic.Sucursal;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.util.Objects;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -21,6 +23,7 @@ public class View implements Observer {
     private JButton imprimirButton;
     private JTable sucursalesFld;
     private JPanel mapaFld;
+    private JLabel mapaLbl;
 
     Controller controller;
     Model model;
@@ -33,6 +36,7 @@ public class View implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.preAgregar();
+                loadSucursales();
             }
         });
         borrarButton.addActionListener(new ActionListener() {
@@ -45,8 +49,11 @@ public class View implements Observer {
         sucursalesFld.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                int row = sucursalesFld.getSelectedRow();
+                if(e.getClickCount() == 1){
+                    loadSucursales(row);
+                }
                 if (e.getClickCount() == 2) {
-                    int row = sucursalesFld.getSelectedRow();
                     controller.editar(row);
                 }
             }
@@ -70,7 +77,71 @@ public class View implements Observer {
             }
         });
     }
+    public void loadSucursales(int selected){
+        int posVec = 0;
+        JLabel suc;
+        Image n;
 
+        mapaLbl.removeAll();
+
+        if(!model.getSucursales().isEmpty() || model != null) {
+            for (Sucursal s : model.getSucursales()) {
+                suc = new JLabel();
+                if (posVec == selected) {
+                    try {
+                        BufferedImage m = ImageIO.read(getClass().getResource("../../../icons/SucursalSel.png"));
+                        suc.setIcon(new ImageIcon(m));
+                    } catch (IOException e) {
+                        System.out.println(e);
+                    }
+                } else {
+                    try {
+                        BufferedImage m = ImageIO.read(getClass().getResource("../../../icons/Sucursal.png"));
+                        suc.setIcon(new ImageIcon(m));
+                    } catch (IOException e) {
+                        System.out.println(e);
+                    }
+                }
+                suc.putClientProperty("indice", posVec);
+                suc.setLocation(s.getX(), s.getY());
+                suc.setText("hola");
+                posVec++;
+
+                mapaLbl.add(suc);
+            }
+        }
+        mapaLbl.repaint();
+    }
+    public void loadSucursales(){
+        int posVec = 0;
+        JLabel suc;
+        Image m;
+
+        mapaLbl.removeAll();
+
+        if(model != null || !model.getSucursales().isEmpty()  ){
+            for(Sucursal s: model.getSucursales()){
+                suc = new JLabel();
+
+                try {
+                    m = ImageIO.read(getClass().getResource("../../../icons/Sucursal.png"));
+                    suc.setIcon(new ImageIcon(m));
+                } catch (IOException e) {
+                    System.out.println(e);
+                }
+
+                suc.setVisible(false);
+                suc.putClientProperty("indice", posVec);
+                suc.setLocation(s.getX(), s.getY());
+                suc.setToolTipText(s.getCodigo() + ", " + s.getReferencia() + ", " + s.getDireccion());
+
+                posVec++;
+
+                mapaLbl.add(suc);
+            }
+        }
+        mapaLbl.repaint();
+    }
     public JPanel getPanel() {
         return panel;
     }
@@ -91,4 +162,5 @@ public class View implements Observer {
         sucursalesFld.setRowHeight(30);
         this.panel.revalidate();
     }
+
 }

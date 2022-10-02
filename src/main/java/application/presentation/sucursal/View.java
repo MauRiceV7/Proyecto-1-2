@@ -3,6 +3,8 @@ package application.presentation.sucursal;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -13,7 +15,8 @@ public class View implements Observer {
 
     Controller controller;
     Model model;
-
+    int x;
+    int y;
     private JPanel panel;
     private JLabel mapaLbl;
     private JTextField codigoFld;
@@ -46,6 +49,14 @@ public class View implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.hide();
+            }
+        });
+        mapaLbl.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                x = e.getX();
+                y = e.getY();
+                
             }
         });
     }

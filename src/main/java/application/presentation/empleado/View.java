@@ -1,12 +1,19 @@
 package application.presentation.empleado;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.util.Objects;
 import java.util.Observable;
 import java.util.Observer;
 import application.Application;
 import application.logic.Empleado;
+import application.logic.Sucursal;
 
 public class View implements Observer {
 
@@ -25,6 +32,7 @@ public class View implements Observer {
     private JTextField sucursalFld;
     private JTextField salarioFld;
     private JLabel salarioLbl;
+    private JLabel mapaLbl;
 
     public View() {
         guardarButton.addActionListener(new ActionListener() {
@@ -44,6 +52,12 @@ public class View implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.hide();
+            }
+        });
+        mapaLbl.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println(e.getX() + "  "  + e.getY());
             }
         });
     }

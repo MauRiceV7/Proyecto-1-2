@@ -60,7 +60,7 @@ public class Application {
         mainView.getTabbedPane1().add("Acerca de..", acercaDeView.getPanel());
 
         window = new JFrame();
-        window.setSize(500,600);
+        window.setSize(800,400);
         window.setExtendedState(JFrame.MAXIMIZED_BOTH);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setTitle("SISTEMA...");

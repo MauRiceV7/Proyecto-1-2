@@ -14,7 +14,7 @@ public class Controller {
 
     public Controller(View view, Model model) {
         model.setCurrent(new Empleado());
-
+        model.setSucursales(Service.instance().sucursalesSearch(""));
         this.view = view;
         this.model = model;
         view.setController(this);
