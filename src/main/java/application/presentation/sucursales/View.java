@@ -6,7 +6,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
@@ -24,10 +23,16 @@ public class View implements Observer {
     private JTable sucursalesFld;
     private JPanel mapaFld;
     private JLabel mapaLbl;
+    private Image imagenMapa;
+    private JLabel sucursalSeleccionadaLbl;
+    private Image imagenSucursalSeleccionada;
+    private JLabel sucursalNoSeleccionadaLbl;
+    private Image imagenSucursalNoSeleccionada;
+
+    private String tempS;
 
     Controller controller;
     Model model;
-
 
     public View() {
         //TODO todos los listeners restantes
@@ -36,7 +41,7 @@ public class View implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.preAgregar();
-                loadSucursales();
+               // loadSucursales();
             }
         });
         borrarButton.addActionListener(new ActionListener() {
@@ -51,7 +56,7 @@ public class View implements Observer {
             public void mouseClicked(MouseEvent e) {
                 int row = sucursalesFld.getSelectedRow();
                 if(e.getClickCount() == 1){
-                    loadSucursales(row);
+                   // loadSucursales(row);
                 }
                 if (e.getClickCount() == 2) {
                     controller.editar(row);
@@ -77,71 +82,30 @@ public class View implements Observer {
             }
         });
     }
-    public void loadSucursales(int selected){
-        int posVec = 0;
-        JLabel suc;
-        Image n;
 
+    public void updateMap(){
         mapaLbl.removeAll();
-
-        if(!model.getSucursales().isEmpty() || model != null) {
-            for (Sucursal s : model.getSucursales()) {
-                suc = new JLabel();
-                if (posVec == selected) {
-                    try {
-                        BufferedImage m = ImageIO.read(getClass().getResource("../../../icons/SucursalSel.png"));
-                        suc.setIcon(new ImageIcon(m));
-                    } catch (IOException e) {
-                        System.out.println(e);
-                    }
-                } else {
-                    try {
-                        BufferedImage m = ImageIO.read(getClass().getResource("../../../icons/Sucursal.png"));
-                        suc.setIcon(new ImageIcon(m));
-                    } catch (IOException e) {
-                        System.out.println(e);
-                    }
-                }
-                suc.putClientProperty("indice", posVec);
-                suc.setLocation(s.getX(), s.getY());
-                suc.setText("hola");
-                posVec++;
-
-                mapaLbl.add(suc);
-            }
-        }
-        mapaLbl.repaint();
+        fillMap();
+        panel.updateUI();
     }
-    public void loadSucursales(){
-        int posVec = 0;
-        JLabel suc;
-        Image m;
 
-        mapaLbl.removeAll();
-
-        if(model != null || !model.getSucursales().isEmpty()  ){
-            for(Sucursal s: model.getSucursales()){
-                suc = new JLabel();
-
-                try {
-                    m = ImageIO.read(getClass().getResource("../../../icons/Sucursal.png"));
-                    suc.setIcon(new ImageIcon(m));
-                } catch (IOException e) {
-                    System.out.println(e);
-                }
-
-                suc.setVisible(false);
-                suc.putClientProperty("indice", posVec);
-                suc.setLocation(s.getX(), s.getY());
-                suc.setToolTipText(s.getCodigo() + ", " + s.getReferencia() + ", " + s.getDireccion());
-
-                posVec++;
-
-                mapaLbl.add(suc);
-            }
+    private void fillMap() {
+        System.out.println("fillMap");
+        for (int j = 0; j < model.getSucursales().size(); j++) {
+            JLabel temp = new JLabel();
+            Sucursal s = model.getSucursales().get(j);
+            temp.setSize(30, 30);
+            temp.setLocation(s.getX() - 15, s.getY() - 31);
+            temp.setToolTipText("<html>" + s.getReferencia()  + "<br/>" + s.getDireccion() +"</html>");
+            if(Objects.equals(tempS, s.getReferencia()))
+                temp.setIcon(new ImageIcon(imagenSucursalSeleccionada));
+            else
+                temp.setIcon(new ImageIcon(imagenSucursalNoSeleccionada));
+            temp.setVisible(true);
+            mapaLbl.add(temp);
         }
-        mapaLbl.repaint();
     }
+
     public JPanel getPanel() {
         return panel;
     }
@@ -157,10 +121,33 @@ public class View implements Observer {
 
     @Override
     public void update(Observable updatedModel, Object parametros) {
+        updateMap();
         int[] cols = {TableModel.CODIGO, TableModel.REFERENCIA, TableModel.DIRECCION, TableModel.ZONAJE};
         sucursalesFld.setModel(new TableModel(cols, model.getSucursales()));
         sucursalesFld.setRowHeight(30);
         this.panel.revalidate();
     }
 
+    private void createUIComponents() throws IOException {
+        // TODO: place custom component creation code here
+        mapaLbl = new JLabel();
+        imagenMapa = ImageIO.read(Objects.requireNonNull(getClass().getResource("../../../icons/mapa.png")));
+        imagenMapa = imagenMapa.getScaledInstance(400, 400, Image.SCALE_SMOOTH);
+        mapaLbl.setIcon(new ImageIcon(imagenMapa));
+
+        sucursalSeleccionadaLbl = new JLabel();
+        imagenSucursalSeleccionada = ImageIO.read(Objects.requireNonNull(getClass().getResource("../../../icons/SucursalSel.png")));
+        imagenSucursalSeleccionada = imagenSucursalSeleccionada.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        sucursalSeleccionadaLbl.setIcon(new ImageIcon(imagenSucursalSeleccionada));
+
+        sucursalNoSeleccionadaLbl = new JLabel();
+        imagenSucursalNoSeleccionada = ImageIO.read(Objects.requireNonNull(getClass().getResource("../../../icons/Sucursal.png")));
+        imagenSucursalNoSeleccionada = imagenSucursalNoSeleccionada.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        sucursalNoSeleccionadaLbl.setIcon(new ImageIcon(imagenSucursalNoSeleccionada));
+
+        sucursalSeleccionadaLbl.setSize(30, 30);
+        sucursalNoSeleccionadaLbl.setSize(30, 30);
+        mapaLbl.add(sucursalSeleccionadaLbl);
+        mapaLbl.add(sucursalNoSeleccionadaLbl);
+    }
 }

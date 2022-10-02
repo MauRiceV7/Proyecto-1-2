@@ -74,14 +74,15 @@ public class View implements Observer {
     }
 
     public Sucursal take() {
-        int zonaje = Integer.parseInt(zonajeFld.getText());
         Sucursal s = new Sucursal();
         s.setCodigo(codigoFld.getText());
         s.setReferencia(referenciaFld.getText());
         s.setDireccion(direccionFld.getText());
-        s.setZonaje(zonaje);
-        s.setX(1);
-        s.setY(1);
+        s.setZonaje(Integer.parseInt(zonajeFld.getText()));
+        s.setX(s.getX());
+        s.setY(s.getY());
+        s.setX(0);
+        s.setY(0);
         return s;
     }
 

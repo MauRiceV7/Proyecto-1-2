@@ -46,7 +46,11 @@ public class Service {
 
     public void empleadoAdd(Empleado empleado) throws Exception{
         Empleado result = data.getEmpleados().stream().filter(e->e.getCedula().equals(empleado.getCedula())).findFirst().orElse(null);
-        if (result==null) data.getEmpleados().add(empleado);
+        if (result==null) {
+            data.getEmpleados().add(empleado);
+            this.store();
+        }
+
         else throw new Exception("Empleado ya existe");
     }
 
@@ -62,6 +66,7 @@ public class Service {
             result = this.empleadoGet(empleado.cedula);
             data.getEmpleados().remove(result);
             data.getEmpleados().add(empleado);
+            this.store();
         }catch (Exception e) {
             throw new Exception("Empleado no existe");
         }
@@ -75,7 +80,10 @@ public class Service {
 
     public void sucursalAdd(Sucursal sucursal) throws Exception{
         Sucursal result = data.getSucursales().stream().filter(s->s.getCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
-        if (result==null) data.getSucursales().add(sucursal);
+        if (result==null) {
+            data.getSucursales().add(sucursal);
+           this.store();
+        }
         else throw new Exception("Sucursal ya existe");
     }
 
@@ -91,6 +99,7 @@ public class Service {
             result = this.sucursalGet(sucursal.codigo);
             data.getSucursales().remove(result);
             data.getSucursales().add(sucursal);
+            this.store();
         }catch (Exception e) {
             throw new Exception("Sucursal no existe");
         }

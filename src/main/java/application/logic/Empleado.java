@@ -1,17 +1,20 @@
 package application.logic;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlID;
 import jakarta.xml.bind.annotation.XmlIDREF;
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Empleado {
+    @XmlID
     String cedula;
     String nombre;
     String numeroTel;
+    int salario;
     @XmlIDREF
     Sucursal sucursal;
-    int salario;
+
 
     public Empleado(String cedula, String nombre, String numeroTel, Sucursal sucursal, int salario) {
         this.cedula = cedula;
