@@ -81,6 +81,16 @@ public class View implements Observer {
                 } catch (Exception ex) { }
             }
         });
+        sucursalesFld.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                 if (e.getClickCount() == 1) {
+                     int row = sucursalesFld.getSelectedRow();
+                     tempS = model.getSucursales().get(row).getReferencia();
+                     updateMap();
+                 }
+            }
+        });
     }
 
     public void updateMap(){
@@ -90,7 +100,6 @@ public class View implements Observer {
     }
 
     private void fillMap() {
-        System.out.println("fillMap");
         for (int j = 0; j < model.getSucursales().size(); j++) {
             JLabel temp = new JLabel();
             Sucursal s = model.getSucursales().get(j);

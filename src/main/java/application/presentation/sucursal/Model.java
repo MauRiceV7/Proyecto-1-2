@@ -28,9 +28,9 @@ public class Model extends Observable {
     }
 
     @Override
-    public synchronized void addObserver(Observer o) {
+    public void addObserver(Observer o) {
         super.addObserver(o);
-        this.commit();
+        commit();
     }
 
     public void commit(){

@@ -34,6 +34,12 @@ public class View implements Observer {
     private JLabel salarioLbl;
     private JLabel mapaLbl;
 
+    private Image imagenMapa;
+    private JLabel sucursalSeleccionadaLbl;
+    private Image imagenSucursalSeleccionada;
+    private JLabel sucursalNoSeleccionadaLbl;
+    private Image imagenSucursalNoSeleccionada;
+
     public View() {
         guardarButton.addActionListener(new ActionListener() {
             @Override
@@ -152,5 +158,28 @@ public class View implements Observer {
             numeroTelLbl.setToolTipText(null);
         }
         return valid;
+    }
+
+    private void createUIComponents() throws IOException {
+        mapaLbl = new JLabel();
+        imagenMapa = ImageIO.read(Objects.requireNonNull(getClass().getResource("../../../icons/mapa.png")));
+        imagenMapa = imagenMapa.getScaledInstance(400, 400, Image.SCALE_SMOOTH);
+        mapaLbl.setIcon(new ImageIcon(imagenMapa));
+
+        sucursalSeleccionadaLbl = new JLabel();
+        imagenSucursalSeleccionada = ImageIO.read(Objects.requireNonNull(getClass().getResource("../../../icons/SucursalSel.png")));
+        imagenSucursalSeleccionada = imagenSucursalSeleccionada.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        sucursalSeleccionadaLbl.setIcon(new ImageIcon(imagenSucursalSeleccionada));
+
+        sucursalNoSeleccionadaLbl = new JLabel();
+        imagenSucursalNoSeleccionada = ImageIO.read(Objects.requireNonNull(getClass().getResource("../../../icons/Sucursal.png")));
+        imagenSucursalNoSeleccionada = imagenSucursalNoSeleccionada.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        sucursalNoSeleccionadaLbl.setIcon(new ImageIcon(imagenSucursalNoSeleccionada));
+
+        sucursalSeleccionadaLbl.setToolTipText("Sucursal Seleccionada");
+        sucursalNoSeleccionadaLbl.setToolTipText("Sucursal Seleccionada");
+
+        sucursalSeleccionadaLbl.setSize(30, 30);
+        sucursalNoSeleccionadaLbl.setSize(30, 30);
     }
 }
