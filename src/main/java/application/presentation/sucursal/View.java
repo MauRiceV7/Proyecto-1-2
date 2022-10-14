@@ -98,8 +98,8 @@ public class View implements Observer {
         s.setReferencia(referenciaFld.getText());
         s.setDireccion(direccionFld.getText());
         s.setZonaje(Integer.parseInt(zonajeFld.getText()));
-        s.setX(s.getX());
-        s.setY(s.getY());
+        s.setX(sucursalNoSeleccionadaLbl.getX() + 15);
+        s.setY(sucursalNoSeleccionadaLbl.getY() + 30);
         return s;
     }
 

@@ -44,6 +44,7 @@ public class View implements Observer {
         guardarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                clean();
                 if (validate()) {
                     Empleado n = take();
                     try {
@@ -86,6 +87,7 @@ public class View implements Observer {
 
     public void setModel(Model model) {
         this.model = model;
+        model.addObserver(this);
     }
 
     @Override
@@ -96,20 +98,59 @@ public class View implements Observer {
         this.cedulaFld.setText(current.getCedula());
         this.nombreFld.setText(current.getNombre());
         this.numeroTelFld.setText(current.getNumeroTel());
-        this.sucursalFld.setText(current.getSucursal().getCodigo());
+        if(current.getSucursal() != null){ sucursalFld.setText(current.getSucursal().getReferencia()); }
+        else { sucursalFld.setText(""); }
         this.salarioFld.setText(salario);
         this.panel.validate();
+
+        if(current.getSucursal() != null){ sucursalFld.setText(current.getSucursal().getReferencia()); }
+        else { sucursalFld.setText(""); }
+
+        actualizarMapa();
+
+        this.panel.validate();
     }
-    //TODO Implementacion final take
+    public void actualizarMapa(){
+        mapaLbl.removeAll();
+        fillMap();
+        panel.updateUI();
+    }
+
     public Empleado take() {
         Empleado e = new Empleado();
         int salario = Integer.parseInt(salarioFld.getText());
         e.setCedula(cedulaFld.getText());
         e.setNombre(nombreFld.getText());
         e.setNumeroTel(numeroTelFld.getText());
-        e.setSucursal(null);
         e.setSalario(salario);
+        for (int i = 0; i < model.getSucursales().size() ; i++) {
+            if(model.getSucursales().get(i).getReferencia().equals(sucursalFld.getText()))
+                e.setSucursal(model.getSucursales().get(i));
+        }
         return e;
+    }
+    private void fillMap() {
+        for (int j = 0; j < model.getSucursales().size(); j++) {
+            JLabel temp = new JLabel();
+            Sucursal s = model.getSucursales().get(j);
+            temp.setSize(30, 30);
+            temp.setLocation(s.getX() - 15, s.getY() - 30);
+            temp.setToolTipText("<html>" + s.getReferencia()  + "<br/>" + s.getDireccion() +"</html>");
+            if(sucursalFld.getText().equals(s.getReferencia()))
+                temp.setIcon(new ImageIcon(imagenSucursalSeleccionada));
+            else
+                temp.setIcon(new ImageIcon(imagenSucursalNoSeleccionada));
+            temp.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    temp.setIcon(new ImageIcon(imagenSucursalSeleccionada));
+                    sucursalFld.setText(s.getReferencia());
+                    sucursalFld.setForeground(Color.RED);
+                    actualizarMapa();
+                }
+            });
+            temp.setVisible(true);
+            mapaLbl.add(temp);
+        }
     }
     private boolean validate() {
         boolean valid = true;
@@ -159,6 +200,16 @@ public class View implements Observer {
         }
         return valid;
     }
+
+    public void clean() {
+        cedulaLbl.setBorder(null);
+        nombreLbl.setBorder(null);
+        numeroTelLbl.setBorder(null);
+        salarioLbl.setBorder(null);
+        sucursalLbl.setBorder(null);
+        mapaLbl.setBorder(null);
+    }
+
 
     private void createUIComponents() throws IOException {
         mapaLbl = new JLabel();

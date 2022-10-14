@@ -23,7 +23,7 @@ public class View implements Observer {
 
     public void logoLoad(){
         try {
-            m = ImageIO.read(getClass().getResource("../../../icons/si.png"));
+            m = ImageIO.read(getClass().getResource("../../../icons/logo.jpg"));
             m = m.getScaledInstance(800, 500, Image.SCALE_SMOOTH);
             logoLbl.setIcon(new ImageIcon(m));
         } catch (IOException e) {

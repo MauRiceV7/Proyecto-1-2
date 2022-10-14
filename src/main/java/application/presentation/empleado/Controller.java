@@ -31,6 +31,7 @@ public class Controller {
     }
     public void preAgregar(){
         model.setModo(Application.MODO_AGREGAR);
+        model.setSucursales(Service.instance().sucursalesSearch(""));
         model.setCurrent(new Empleado());
         model.commit();
         this.show();

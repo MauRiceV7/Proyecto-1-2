@@ -104,7 +104,7 @@ public class View implements Observer {
             JLabel temp = new JLabel();
             Sucursal s = model.getSucursales().get(j);
             temp.setSize(30, 30);
-            temp.setLocation(s.getX() - 15, s.getY() - 31);
+            temp.setLocation(s.getX() - 15, s.getY() - 30);
             temp.setToolTipText("<html>" + s.getReferencia()  + "<br/>" + s.getDireccion() +"</html>");
             if(Objects.equals(tempS, s.getReferencia()))
                 temp.setIcon(new ImageIcon(imagenSucursalSeleccionada));
@@ -138,7 +138,6 @@ public class View implements Observer {
     }
 
     private void createUIComponents() throws IOException {
-        // TODO: place custom component creation code here
         mapaLbl = new JLabel();
         imagenMapa = ImageIO.read(Objects.requireNonNull(getClass().getResource("../../../icons/mapa.png")));
         imagenMapa = imagenMapa.getScaledInstance(400, 400, Image.SCALE_SMOOTH);

@@ -85,10 +85,12 @@ public class Controller {
         document.setMargins(20, 20, 20, 20);
 
         Table header = new Table(1);
-        header.setWidth(400);
+        Image image = new Image(ImageDataFactory.create("src/main/resources/icons/logo.jpg"));
+        image = image.scaleToFit(300,300);
+
         header.setHorizontalAlignment(HorizontalAlignment.CENTER);
-        header.addCell(getCell(new Paragraph("Sistema Integrado SISE").setFont(font).setBold().setFontSize(20f), TextAlignment.CENTER,false));
-        header.addCell(getCell(new Image(ImageDataFactory.create("logo.jpg")), HorizontalAlignment.CENTER,false));
+        header.addCell(getCell(new Paragraph("Sistema Integrado SISE: Sucursales").setFont(font).setBold().setFontSize(20f), TextAlignment.CENTER,false));
+        header.addCell(getCell(image, HorizontalAlignment.CENTER,false));
         document.add(header);
 
         document.add(new Paragraph(""));document.add(new Paragraph(""));
@@ -96,19 +98,21 @@ public class Controller {
         Color bkg = ColorConstants.RED;
         Color frg= ColorConstants.WHITE;
         Table body = new Table(4);
-        body.setWidth(400);
+        body.setWidth(500);
         body.setHorizontalAlignment(HorizontalAlignment.CENTER);
         body.addCell(getCell(new Paragraph("Codigo").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
         body.addCell(getCell(new Paragraph("Referencia").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
         body.addCell(getCell(new Paragraph("Direccion").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
         body.addCell(getCell(new Paragraph("Zonaje").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
+
         for(Sucursal s: model.getSucursales()){
             String zonaje = String.valueOf(s.getZonaje());
             body.addCell(getCell(new Paragraph(s.getCodigo()),TextAlignment.CENTER,true));
             body.addCell(getCell(new Paragraph(s.getReferencia()),TextAlignment.CENTER,true));
             body.addCell(getCell(new Paragraph(s.getDireccion()),TextAlignment.CENTER,true));
-            body.addCell(getCell(new Paragraph(zonaje),TextAlignment.CENTER,true));
+            body.addCell(getCell(new Paragraph(String.valueOf(s.getZonaje())),TextAlignment.CENTER,true));
         }
+
         document.add(body);
         document.close();
     }

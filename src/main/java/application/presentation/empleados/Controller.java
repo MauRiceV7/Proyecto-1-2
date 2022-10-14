@@ -84,13 +84,15 @@ public class Controller {
 
         //Document document = new Document(pdf, PageSize.A4.rotate());
         Document document = new Document(pdf);
-        document.setMargins(20, 20, 20, 20);
+        document.setMargins(10, 10, 10, 10);
 
         Table header = new Table(1);
-        header.setWidth(400);
+        Image image = new Image(ImageDataFactory.create("src/main/resources/icons/logo.jpg"));
+        image = image.scaleToFit(300,300);
+
         header.setHorizontalAlignment(HorizontalAlignment.CENTER);
-        header.addCell(getCell(new Paragraph("Sistema Integrado SISE").setFont(font).setBold().setFontSize(20f), TextAlignment.CENTER,false));
-        header.addCell(getCell(new Image(ImageDataFactory.create("logo.jpg")), HorizontalAlignment.CENTER,false));
+        header.addCell(getCell(new Paragraph("Sistema Integrado SISE: Empleados").setFont(font).setBold().setFontSize(20f), TextAlignment.CENTER,false));
+        header.addCell(getCell(image, HorizontalAlignment.CENTER,false));
         document.add(header);
 
         document.add(new Paragraph(""));document.add(new Paragraph(""));
@@ -98,7 +100,7 @@ public class Controller {
         Color bkg = ColorConstants.RED;
         Color frg= ColorConstants.WHITE;
         Table body = new Table(7);
-        body.setWidth(400);
+        body.setWidth(500);
         body.setHorizontalAlignment(HorizontalAlignment.CENTER);
         body.addCell(getCell(new Paragraph("Cedula").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
         body.addCell(getCell(new Paragraph("Nombre").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
@@ -107,18 +109,15 @@ public class Controller {
         body.addCell(getCell(new Paragraph("Sucursal").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
         body.addCell(getCell(new Paragraph("% Zonaje").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
         body.addCell(getCell(new Paragraph("Sal. Total").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
+
         for(Empleado e: model.getEmpleados()){
-            String salario = String.valueOf(e.getSalario());
-            String zonaje = String.valueOf(e.getSucursal().getZonaje());
-            String salarioTotal = String.valueOf(e.getSalarioTotal());
             body.addCell(getCell(new Paragraph(e.getCedula()),TextAlignment.CENTER,true));
             body.addCell(getCell(new Paragraph(e.getNombre()),TextAlignment.CENTER,true));
             body.addCell(getCell(new Paragraph(e.getNumeroTel()),TextAlignment.CENTER,true));
-            body.addCell(getCell(new Paragraph(salario),TextAlignment.CENTER,true));
+            body.addCell(getCell(new Paragraph(String.valueOf(e.getSalario())),TextAlignment.CENTER,true));
             body.addCell(getCell(new Paragraph(e.getSucursal().getReferencia()),TextAlignment.CENTER,true));
-            body.addCell(getCell(new Paragraph(zonaje),TextAlignment.CENTER,true));
-            body.addCell(getCell(new Paragraph(salarioTotal),TextAlignment.CENTER,true));
-
+            body.addCell(getCell(new Paragraph(String.valueOf(e.getSucursal().getZonaje())),TextAlignment.CENTER,true));
+            body.addCell(getCell(new Paragraph(String.valueOf(e.getSalarioTotal())),TextAlignment.CENTER,true));
         }
         document.add(body);
         document.close();
